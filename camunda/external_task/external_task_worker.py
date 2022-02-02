@@ -66,8 +66,9 @@ class ExternalTaskWorker:
                 tasks.append(task)
 
         tasks_count = len(tasks)
-        self._log_with_context(f"{tasks_count} External task(s) found for "
-                               f"Topics: {topic_names}, Process variables: {process_variables}")
+        if tasks_count > 0:
+            self._log_with_context(f"{tasks_count} External task(s) found for "
+                                   f"Topics: {topic_names}, Process variables: {process_variables}")
         return tasks
 
     def _execute_tasks(self, tasks, action):
