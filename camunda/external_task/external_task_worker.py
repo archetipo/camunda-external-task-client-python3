@@ -28,8 +28,9 @@ class ExternalTaskWorker:
         try:
             self.fetch_and_execute(topic_names, action, process_variables)
         except NoExternalTaskFound:
-            self._log_with_context(f"no External Task found for Topics: {topic_names}, "
-                                   f"Process variables: {process_variables}", topic=topic_names)
+            # self._log_with_context(f"no External Task found for Topics: {topic_names}, "
+            #                        f"Process variables: {process_variables}", topic=topic_names)
+            pass
         except BaseException as e:
             sleep_seconds = self._get_sleep_seconds()
             self._log_with_context(f'error fetching and executing tasks: {get_exception_detail(e)} '
