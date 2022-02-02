@@ -29,9 +29,9 @@ class ExternalTaskWorker:
         try:
             self.fetch_and_execute(topic_names, action, process_variables)
         except NoExternalTaskFound:
-            # self._log_with_context(f"no External Task found for Topics: {topic_names}, "
-            #                        f"Process variables: {process_variables}", topic=topic_names)
-            pass
+            if self.is_debug:
+                self._log_with_context(f"no External Task found for Topics: {topic_names}, "
+                                       f"Process variables: {process_variables}", topic=topic_names)
         except BaseException as e:
             sleep_seconds = self._get_sleep_seconds()
             self._log_with_context(f'error fetching and executing tasks: {get_exception_detail(e)} '
@@ -40,18 +40,20 @@ class ExternalTaskWorker:
             time.sleep(sleep_seconds)
 
     def fetch_and_execute(self, topic_names, action, process_variables=None):
-        self._log_with_context(f"Fetching and Executing external tasks for Topics: {topic_names} "
-                               f"with Process variables: {process_variables}")
+        if self.is_debug:
+            self._log_with_context(f"Fetching and Executing external tasks for Topics: {topic_names} "
+                                   f"with Process variables: {process_variables}")
         resp_json = self._fetch_and_lock(topic_names, process_variables)
         tasks = self._parse_response(resp_json, topic_names, process_variables)
-        if len(tasks) == 0:
+        if len(tasks) == 0 and self.is_debug:
             raise NoExternalTaskFound(f"no External Task found for Topics: {topic_names}, "
                                       f"Process variables: {process_variables}")
         self._execute_tasks(tasks, action)
 
     def _fetch_and_lock(self, topic_names, process_variables=None):
-        self._log_with_context(f"Fetching and Locking external tasks for Topics: {topic_names} "
-                               f"with Process variables: {process_variables}")
+        if self.is_debug:
+            self._log_with_context(f"Fetching and Locking external tasks for Topics: {topic_names} "
+                                   f"with Process variables: {process_variables}")
         return self.client.fetch_and_lock(topic_names, process_variables)
 
     def _parse_response(self, resp_json, topic_names, process_variables):
