@@ -53,11 +53,13 @@ class ExternalTaskExecutor:
         if self.external_task_client.complete(task_id, task_result.global_variables, task_result.local_variables):
             self._log_with_context(f"Marked task completed - Topic: {topic} "
                                    f"global_variables: {self._strip_long_variables(task_result.global_variables)} "
-                                   f"local_variables: {self._strip_long_variables(task_result.local_variables)}", task_id)
+                                   f"local_variables: {self._strip_long_variables(task_result.local_variables)}",
+                                   task_id)
         else:
             self._log_with_context(f"Not able to mark task completed - Topic: {topic} "
                                    f"global_variables: {self._strip_long_variables(task_result.global_variables)} "
-                                   f"local_variables: {self._strip_long_variables(task_result.local_variables)}", task_id)
+                                   f"local_variables: {self._strip_long_variables(task_result.local_variables)}",
+                                   task_id)
             raise Exception(f"Not able to mark complete for task_id={task_id} "
                             f"for topic={topic}, worker_id={self.worker_id}")
 
