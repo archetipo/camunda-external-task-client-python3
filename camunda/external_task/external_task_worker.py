@@ -29,7 +29,7 @@ class ExternalTaskWorker:
     def subscribe(self, topic_names, action, process_variables=None):
         while True:
             self._fetch_and_execute_safe(topic_names, action, process_variables)
-            time.sleep(self.default_subcribe_millisec_period)
+            time.sleep(self.default_subcribe_millisec_period/1000)
         self._log_with_context("Stopping worker")  # Fixme: This code seems to be unreachable?
 
     def _fetch_and_execute_safe(self, topic_names, action, process_variables=None):
