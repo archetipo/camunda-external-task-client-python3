@@ -82,25 +82,25 @@ class ExternalTaskTest(TestCase):
         self.assertIsNone(variable)
 
     def test_get_variable_returns_value_for_variable_present(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1}}})
+        task = ExternalTask(context={"variables": {"var_name": {"value": 1, "type": "Integer"}}})
         variable = task.get_variable("var_name")
         self.assertEqual(1, variable)
 
     def test_get_variable_returns_with_meta(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1}}})
+        task = ExternalTask(context={"variables": {"var_name": {"value": 2, "type": "Integer"}}})
         variable = task.get_variable("var_name", True)
         self.assertEqual({"value": 1}, variable)
 
     def test_get_variable_returns_without_meta(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1}}})
+        task = ExternalTask(context={"variables": {"var_name": {"value": 1, "type": "Integer"}}})
         variable = task.get_variable("var_name", False)
         self.assertEqual(1, variable)
 
     def test_get_property_returns_value_for_property_present(self):
-        task = ExternalTask(context={"extensionProperties":  {"var1":"one","var2":"two"}})
+        task = ExternalTask(context={"extensionProperties": {"var1": "one", "var2": "two"}})
         prop = task.get_extension_property("var1")
         self.assertEqual("one", prop)
 
     def test_str(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1}}})
-        self.assertEqual("{'variables': {'var_name': {'value': 1}}}", str(task))
+        task = ExternalTask(context={"variables": {"var_name": 1}})
+        self.assertEqual("{'variables': {'var_name': {'value': 1, 'type':'Integer'}}}", str(task))
