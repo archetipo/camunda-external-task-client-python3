@@ -1,9 +1,11 @@
 import json
 import inflection
 from typing import Any, Dict, List, Tuple, Union
+from datetime import date, datetime
+from dateutil import parser
 
 LATEST = "__latest__"
-
+JSONPrimitive = Union[str, int, None, float]
 ProcessVariable = Dict[str, JSONPrimitive]  # {"type": "Integer", "value": 42}
 ProcessVariables = Dict[str, ProcessVariable]
 
@@ -88,6 +90,8 @@ class Variables:
 
     @classmethod
     def deserialize_variable(cls, variable: ProcessVariable) -> Any:
+        if not variable:
+            return variable
         var_type = variable.get("type", "String")
         converter = REVERSE_TYPE_MAP.get(var_type.lower())
         value = converter(variable["value"])
