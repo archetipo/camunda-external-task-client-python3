@@ -89,7 +89,7 @@ class ExternalTaskTest(TestCase):
     def test_get_variable_returns_with_meta(self):
         task = ExternalTask(context={"variables": {"var_name": {"value": 2, "type": "Integer"}}})
         variable = task.get_variable("var_name", True)
-        self.assertEqual({"value": 1}, variable)
+        self.assertEqual(2, variable)
 
     def test_get_variable_returns_without_meta(self):
         task = ExternalTask(context={"variables": {"var_name": {"value": 1, "type": "Integer"}}})
@@ -103,4 +103,4 @@ class ExternalTaskTest(TestCase):
 
     def test_str(self):
         task = ExternalTask(context={"variables": {"var_name": 1}})
-        self.assertEqual("{'variables': {'var_name': {'value': 1, 'type':'Integer'}}}", str(task))
+        self.assertEqual("{'variables': {'var_name': 1}}", str(task))

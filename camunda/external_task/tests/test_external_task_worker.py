@@ -121,6 +121,7 @@ class ExternalTaskWorkerTest(TestCase):
                       status=HTTPStatus.OK, json=resp_payload)
 
         worker = ExternalTaskWorker(worker_id=0)
+        worker.is_debug = True
         mock_action = mock.Mock()
         process_variables = {"var1": "value1", "var2": "value2"}
         with self.assertRaises(Exception) as context:
