@@ -4,6 +4,7 @@ from camunda.client.external_task_client import ExternalTaskClient, ENGINE_LOCAL
 from camunda.external_task.external_task import ExternalTask
 from camunda.external_task.external_task_executor import ExternalTaskExecutor
 from camunda.utils.log_utils import log_with_context
+from camunda.utils.auth_basic import obfuscate_password
 from camunda.utils.utils import get_exception_detail
 
 SUBSCRIBE_PERIOD_MILLISECONDS = 300
@@ -23,6 +24,7 @@ class ExternalTaskWorker:
             self.default_subcribe_millisec_period = config.get("subcribe_millisec_period")
         self.is_debug = config.get('isDebug')
         self._log_with_context(f"Created new External Task Worker with config: {self.config}")
+        self._log_with_context(f"Created new External Task Worker with config: {obfuscate_password(self.config)}")
 
     def subscribe(self, topic_names, action, process_variables=None):
         while True:
@@ -33,7 +35,6 @@ class ExternalTaskWorker:
     def _fetch_and_execute_safe(self, topic_names, action, process_variables=None):
         try:
             self.fetch_and_execute(topic_names, action, process_variables)
-
         except NoExternalTaskFound:
             if self.is_debug:
                 self._log_with_context(f"no External Task found for Topics: {topic_names}, "

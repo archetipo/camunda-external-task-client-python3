@@ -31,6 +31,11 @@ class VariablesTest(TestCase):
         variables = {}
         self.assertDictEqual({}, Variables.format(variables))
 
+    def test_format_returns_dict_with_value_when_nested_dict(self):
+        var1_raw = {"var2": 1, "var3": "test"}
+        variables = {"var1": var1_raw}
+        self.assertDictEqual({"var1": {"value": var1_raw}}, Variables.format(variables))
+
     def test_format_returns_formatted_variables_when_variables_present(self):
         variables = {"var1": 1, "var2": True, "var3": "string"}
         formatted_vars = Variables.format(variables)
@@ -53,3 +58,5 @@ class VariablesTest(TestCase):
                                "var2": {"type": "Boolean", "value": True},
                                "var3": {"type": "String", "value": "string"}})
         self.assertDictEqual({"var1": 1, "var2": True, "var3": "string"}, variables.to_dict())
+
+

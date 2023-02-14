@@ -201,7 +201,7 @@ resp_json = client.correlate_message("CANCEL_MESSAGE", business_key="b4a6f392-12
 ```
 ## AuthBasic Usage
 
-To create an EngineClient wirh AuthBasic simple
+To create an EngineClient with AuthBasic simple
 
 ```python
 client = EngineClient(config={"auth_basic": {"username": "demo", "password": "demo"}})
@@ -209,7 +209,7 @@ resp_json = client.start_process(process_key="PARALLEL_STEPS_EXAMPLE", variables
                                  tenant_id="6172cdf0-7b32-4460-9da0-ded5107aa977", business_key=str(uuid.uuid1()))
 ```
 
-To create an ExternalTaskWorker wirh AuthBasic simple
+To create an ExternalTaskWorker with AuthBasic simple
 
 ```python
 from camunda.external_task.external_task import ExternalTask, TaskResult

@@ -91,6 +91,8 @@ class Variables:
     @classmethod
     def deserialize_variable(cls, variable: ProcessVariable) -> Any:
         if not variable:
+            return None
+        if with_meta:
             return variable
         var_type = variable.get("type", "String")
         converter = REVERSE_TYPE_MAP.get(var_type.lower())
