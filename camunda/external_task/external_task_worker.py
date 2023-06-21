@@ -19,7 +19,7 @@ class ExternalTaskWorker:
         self.client = ExternalTaskClient(self.worker_id, base_url, config)
         self.executor = ExternalTaskExecutor(self.worker_id, self.client)
         self.config = config
-        self.default_subcribe_millisec_period = SUBSCRIBE_PERIOD_MILLISECONDS
+        self.default_subcribe_millisec_period = self.SUBSCRIBE_PERIOD_MILLISECONDS
         if config.get("subcribe_millisec_period"):
             self.default_subcribe_millisec_period = config.get("subcribe_millisec_period")
         self.is_debug = config.get('isDebug')
