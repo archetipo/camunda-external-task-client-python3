@@ -7,12 +7,12 @@ from camunda.utils.log_utils import log_with_context
 from camunda.utils.auth_basic import obfuscate_password
 from camunda.utils.utils import get_exception_detail
 
-SUBSCRIBE_PERIOD_MILLISECONDS = 300
+
 
 
 class ExternalTaskWorker:
     DEFAULT_SLEEP_SECONDS = 300
-
+    SUBSCRIBE_PERIOD_MILLISECONDS = 3
     def __init__(self, worker_id, base_url=ENGINE_LOCAL_BASE_URL, config=None):
         config = config if config is not None else {}  # To avoid to have a mutable default for a parameter
         self.worker_id = worker_id
