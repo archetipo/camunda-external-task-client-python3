@@ -7,7 +7,8 @@ class ExternalTaskTest(TestCase):
 
     def test_external_task_creation_from_context(self):
         context = {
-            "id": "123", "workerId": "321", "topicName": "my_topic", "tenantId": "tenant1",
+            "id": "123", "workerId": "321", "topicName": "my_topic",
+            "tenantId": "tenant1",
             "processInstanceId": "processInstanceId1",
             "variables": {
                 "applicationId": {
@@ -24,7 +25,8 @@ class ExternalTaskTest(TestCase):
         self.assertEqual("my_topic", task.get_topic_name())
         self.assertEqual("tenant1", task.get_tenant_id())
         self.assertEqual("processInstanceId1", task.get_process_instance_id())
-        self.assertDictEqual({"applicationId": "appId987"}, task.get_variables())
+        self.assertDictEqual({"applicationId": "appId987"},
+                             task.get_variables())
         self.assertEqual("empty_task_result", str(task.get_task_result()))
 
     def test_complete_returns_success_task_result(self):
@@ -40,7 +42,8 @@ class ExternalTaskTest(TestCase):
 
     def test_failure_returns_failure_task_result(self):
         task = ExternalTask(context={})
-        task_result = task.failure(error_message="unknown error", error_details="error details here",
+        task_result = task.failure(error_message="unknown error",
+                                   error_details="error details here",
                                    max_retries=3, retry_timeout=1000)
 
         self.assertEqual(task, task_result.get_task())
@@ -57,7 +60,8 @@ class ExternalTaskTest(TestCase):
 
     def test_bpmn_error_returns_bpmn_error_task_result(self):
         task = ExternalTask(context={})
-        task_result = task.bpmn_error(error_code="bpmn_error_code_1", error_message="bpmn error")
+        task_result = task.bpmn_error(error_code="bpmn_error_code_1",
+                                      error_message="bpmn error")
 
         self.assertEqual(task, task_result.get_task())
         self.assertEqual(task_result, task.get_task_result())
@@ -68,10 +72,12 @@ class ExternalTaskTest(TestCase):
 
         self.assertEqual("bpmn_error_code_1", task_result.bpmn_error_code)
 
-    def test_task_with_retries_returns_failure_task_result_with_decremented_retries(self):
+    def test_task_with_retries_returns_failure_task_result_with_decremented_retries(
+            self):
         retries = 3
         task = ExternalTask(context={"retries": retries})
-        task_result = task.failure(error_message="unknown error", error_details="error details here",
+        task_result = task.failure(error_message="unknown error",
+                                   error_details="error details here",
                                    max_retries=10, retry_timeout=1000)
 
         self.assertEqual(retries - 1, task_result.retries)
@@ -82,22 +88,26 @@ class ExternalTaskTest(TestCase):
         self.assertIsNone(variable)
 
     def test_get_variable_returns_value_for_variable_present(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1, "type": "Integer"}}})
+        task = ExternalTask(context={
+            "variables": {"var_name": {"value": 1, "type": "Integer"}}})
         variable = task.get_variable("var_name")
         self.assertEqual(1, variable)
 
     def test_get_variable_returns_with_meta(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 2, "type": "Integer"}}})
+        task = ExternalTask(context={
+            "variables": {"var_name": {"value": 2, "type": "Integer"}}})
         variable = task.get_variable("var_name", True)
-        self.assertEqual(2, variable)
+        self.assertEqual({"value": 2, "type": "Integer"}, variable)
 
     def test_get_variable_returns_without_meta(self):
-        task = ExternalTask(context={"variables": {"var_name": {"value": 1, "type": "Integer"}}})
-        variable = task.get_variable("var_name", False)
+        task = ExternalTask(context={
+            "variables": {"var_name": {"value": 1, "type": "Integer"}}})
+        variable = task.get_variable("var_name")
         self.assertEqual(1, variable)
 
     def test_get_property_returns_value_for_property_present(self):
-        task = ExternalTask(context={"extensionProperties": {"var1": "one", "var2": "two"}})
+        task = ExternalTask(
+            context={"extensionProperties": {"var1": "one", "var2": "two"}})
         prop = task.get_extension_property("var1")
         self.assertEqual("one", prop)
 
