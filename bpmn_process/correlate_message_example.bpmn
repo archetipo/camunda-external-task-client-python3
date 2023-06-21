@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0q4se87" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
-  <bpmn:process id="CORRELATE_MESSAGE_EXAMPLE" name="Correlate Message Example" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0q4se87" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.12.0">
+  <bpmn:process id="CORRELATE_MESSAGE_EXAMPLE" name="Correlate Message Example" isExecutable="true" camunda:historyTimeToLive="1">
     <bpmn:startEvent id="START" name="Start">
       <bpmn:outgoing>Flow_1i98wn5</bpmn:outgoing>
     </bpmn:startEvent>
@@ -37,18 +37,6 @@
   <bpmn:message id="Message_0nbfe6r" name="CANCEL_MESSAGE" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CORRELATE_MESSAGE_EXAMPLE">
-      <bpmndi:BPMNEdge id="Flow_1i98wn5_di" bpmnElement="Flow_1i98wn5">
-        <di:waypoint x="215" y="117" />
-        <di:waypoint x="270" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_04vqn7h_di" bpmnElement="Flow_04vqn7h">
-        <di:waypoint x="370" y="117" />
-        <di:waypoint x="430" y="117" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0tnnj1f_di" bpmnElement="Flow_0tnnj1f">
-        <di:waypoint x="530" y="117" />
-        <di:waypoint x="592" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="START">
         <dc:Bounds x="179" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -70,14 +58,6 @@
       <bpmndi:BPMNShape id="Activity_1v4vzpc_di" bpmnElement="CANCEL_SUBPROCESS" isExpanded="true">
         <dc:Bounds x="190" y="210" width="430" height="200" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0lk019x_di" bpmnElement="Flow_0lk019x">
-        <di:waypoint x="266" y="310" />
-        <di:waypoint x="320" y="310" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1tefi39_di" bpmnElement="Flow_1tefi39">
-        <di:waypoint x="420" y="310" />
-        <di:waypoint x="482" y="310" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_1bpkjhj_di" bpmnElement="START_CANCEL">
         <dc:Bounds x="230" y="292" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -93,6 +73,26 @@
           <dc:Bounds x="477" y="335" width="49" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lk019x_di" bpmnElement="Flow_0lk019x">
+        <di:waypoint x="266" y="310" />
+        <di:waypoint x="320" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1tefi39_di" bpmnElement="Flow_1tefi39">
+        <di:waypoint x="420" y="310" />
+        <di:waypoint x="482" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i98wn5_di" bpmnElement="Flow_1i98wn5">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_04vqn7h_di" bpmnElement="Flow_04vqn7h">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tnnj1f_di" bpmnElement="Flow_0tnnj1f">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

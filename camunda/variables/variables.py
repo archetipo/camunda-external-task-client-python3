@@ -30,7 +30,8 @@ def noop(val):
     return val
 
 
-def underscoreize(data: Union[List, Dict, str, None]) -> Union[List, Dict, str, None]:
+def underscoreize(data: Union[List, Dict, str, None]) -> Union[
+    List, Dict, str, None]:
     if isinstance(data, list):
         return [underscoreize(item) for item in data]
 
@@ -85,11 +86,12 @@ REVERSE_TYPE_MAP = {
 
 
 class Variables:
-    def __init__(self, variables={}):
-        self.variables = variables
+    def __init__(self, variables: dict = None):
+        self.variables = variables or {}
 
     @classmethod
-    def deserialize_variable(cls, variable: ProcessVariable) -> Any:
+    def deserialize_variable(
+            cls, variable: ProcessVariable, with_meta=False) -> Any:
         if not variable:
             return None
         if with_meta:
@@ -97,14 +99,20 @@ class Variables:
         var_type = variable.get("type", "String")
         converter = REVERSE_TYPE_MAP.get(var_type.lower())
         value = converter(variable["value"])
+        # the line of code follow is used as a fallback
+        # see test test_get_variable_returns_value_when_variable_present
+        # and test test_get_variable_returns_with_meta
         value = try_is_json(value)
+        if with_meta:
+            return {"value": value, "type": variable['type']}
         return value
 
     @classmethod
     def serialize_variable(cls, value: Any) -> ProcessVariable:
         val_type = type(value)
         if val_type not in TYPE_MAP:
-            raise NotImplementedError(f"Type {val_type} is not implemented yet")
+            raise NotImplementedError(
+                f"Type {val_type} is not implemented yet")
 
         type_name, converter = TYPE_MAP[val_type]
         value = converter(value)
@@ -112,7 +120,8 @@ class Variables:
 
     def get_variable(self, variable_name, with_meta=False):
 
-        return self.deserialize_variable(self.variables.get(variable_name))
+        return self.deserialize_variable(
+            self.variables.get(variable_name), with_meta=with_meta)
 
     @classmethod
     def format(cls, variables):
