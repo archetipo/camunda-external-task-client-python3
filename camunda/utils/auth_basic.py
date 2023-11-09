@@ -1,5 +1,6 @@
 import base64
 import copy
+
 from pydantic import BaseModel
 
 
@@ -14,6 +15,7 @@ def obfuscate_password(config: dict) -> dict:
     if _auth is not None and 'password' in _auth.keys():
         _auth['password'] = '***'
     return _config
+
 
 class AuthBasic(BaseModel):
     username: str

@@ -1,7 +1,8 @@
 import json
-import inflection
-from typing import Any, Dict, List, Tuple, Union
 from datetime import date, datetime
+from typing import Any, Dict, List, Tuple, Union
+
+import inflection
 from dateutil import parser
 
 LATEST = "__latest__"

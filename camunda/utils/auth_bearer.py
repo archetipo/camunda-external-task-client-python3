@@ -1,13 +1,12 @@
 from typing import Any, Dict, Union
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 
 class AuthBearer(BaseModel):
     access_token: str
 
-    @validator('access_token', pre=True)
-    @classmethod
+    @field_validator('access_token', mode="before")
     def get_token_from_dict(cls, value: Union[str, Dict[str, Any]]) -> str:
         if isinstance(value, str):
             return value
@@ -18,8 +17,7 @@ class AuthBearer(BaseModel):
                 'you should pass the token inside "access_token" key')
         return value['access_token']
 
-    @validator('access_token')
-    @classmethod
+    @field_validator('access_token')
     def concat_bearer(cls, value: str) -> str:
         if not any([
             value.startswith('Bearer'),
